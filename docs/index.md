@@ -1,5 +1,3 @@
-# HTB - Fluffy 🐇
-
 Welcome to my writeup for the HackTheBox machine Fluffy. Fluffy is a easy Windows Active Directory box that focuses on enumeration, SMB exploitation, Kerberos attacks, and privilege escalation. 
 This repository is for educational purposes only.
 
