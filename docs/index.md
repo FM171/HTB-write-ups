@@ -62,18 +62,17 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
 5. Crack the with rockyou.txt: 
   ``` hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt``
 
-  ```
-    sudo nxc ldap dc01.fluffy.htb -u '<USERNAME>' -p '<PASSWORD>' \
-  --bloodhound --collection All --dns-tcp --dns-server <TARGET_IP> ```
+6. Now we have a new username and password. You might try evil-winrm, but the user does not have permission. So, let's enumerate more. Create a BloodHound file and upload to bloodhound review.
+      ```
+        sudo nxc ldap dc01.fluffy.htb -u '<USERNAME>' -p '<PASSWORD>' \
+      --bloodhound --collection All --dns-tcp --dns-server <TARGET_IP> ```
 
 
 Observations
 
-User has GenericWrite permissions over the Service Accounts group, which allows access to WINRM_SVC, an account with WinRM permissions. Given that the user we were provided and the one we discovered do not have permission to execute evil-winrm, this appears to be the logical path for obtaining the flag.
+The user we found is in SERVICE ACCOUNT MANAGERS, which has full control (GenericAll) over SERVICE ACCOUNTS; SERVICE ACCOUNTS can modify WINRM_SVC (GenericWrite).
 
-In this scenario, `<USER>` is a member of the **Service Accounts** group and has `GenericWrite` permissions on the group. This opens the possibility for a **Shadow Credentials** attack.
-
-
+Implications: User can indirectly modify service accounts. Compromising this user could allow escalation to WINRM_SVC via the permission chain. WINRM_SVC can access remote login is and likely has the flag. 
 
 ## Preparations
 
