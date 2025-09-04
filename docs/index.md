@@ -55,7 +55,7 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
    3. Upload payload to target IT share.
       `put evil.zip`
 
-4. You should ses username + hash on listner.
+4. You should see username + hash on listner.
 
 5. Crack the with rockyou.txt: 
   `hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt`
@@ -73,11 +73,11 @@ Implications: User can indirectly modify service accounts. Compromising this use
 
 ## Preparations
 
-- Install the following tools in a virtual environment:
+- Start a virtual environment in your folder and install the following tools in a virtual environment:
   - `pywhisker`
   - `PKINITtools`
   - `faketime`
-- Starting a virtual environment might also be useful 
+
 
 ---
 
