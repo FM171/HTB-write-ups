@@ -30,7 +30,7 @@ This engagement commenced with initial access via valid credentials for the user
 `sudo nmap -sC -sV 10.129.165.40`
 NMAP is tool ised for port scanning, service dction and network disocver. 
 - `-sC` runs nmap defaul scripts
-- `sV` treis to idnefy the exact software running. 
+- `sV` tries to identify the exact software running. 
 
 
 <img src="images/nmap_scan.png" alt="nmap scan">
@@ -40,10 +40,11 @@ Next enumrate SMB share
 `smbmap -H 10.129.165.40 -u "j.fleischman -p J0elTHEM4n1990!"`
  <img src="images/smbmap.png" class="report-images" alt="SMBMAP">
 
-Form this we wee have read and write to IT share so lets see connect to that share and see if there is anything in it. 
-```smbclient //10.129.165.40/IT -U "j.fleischman"`
-Password for [WORKGROUP\j.fleischman]:
-Should see:
+Form this we wee have read and write to IT share so lets see connect to that share and see if there is anything in it.
+
+`smbclient //10.129.165.40/IT -U "j.fleischman"`
+
+
 smb: \> ls
   .                                   D        0  Fri Sep  5 20:08:31 2025
   ..                                  D        0  Fri Sep  5 20:08:31 2025
@@ -81,7 +82,11 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
 9. Upload the ladp file we created to upload 
 10. Search for User we enumerated
 11. Examine relationships and you will see this 
-![Nmap Scan](images/bloodhound.png)
+
+
+![BloodHound Scan](images/Bloodhound.png)
+
+
 12. If examine WINRM_SVC in BloddHound, it is member of remote services add can remote login. If we try to use EVil-winrm for user p.agila or J.FLEISCHMAN will see users dint have permisison. 
 
 Observations form BloodHound
