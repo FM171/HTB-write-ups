@@ -28,9 +28,13 @@ This engagement commenced with initial access via valid credentials for the user
 # Detailed reproduction steps for this CVE-2025-24071 & Shadow Credentials Misuse
 
 `sudo nmap -sC -sV 10.129.165.40`
-NMAP is tool ised for port scanning, service dction and network disocver. -sC runs nmap defaul scripts and sV treis to idnefy the exact software running. 
+NMAP is tool ised for port scanning, service dction and network disocver. 
+- `-sC` runs nmap defaul scripts
+- `sV` treis to idnefy the exact software running. 
 
-![Alt Text]https://fm171.github.io/HTB-FLUFFY/images/nmap_scan.png)
+
+<img src="images/nmap_scan.png" alt="nmap scan">
+
 
 Next enumrate SMB share
 `smbmap -H 10.129.165.40 -u "j.fleischman -p J0elTHEM4n1990!"`
