@@ -3,11 +3,11 @@
 
 The HTB Fluffy machine is an "Easy" rated Windows Active Directory environment designed to simulate a real-world enterprise network. 
 
-This engagement commenced with initial access via valid credentials for the user `j.fleischman`, provided in a compromised state. Subsequent enumeration and exploitation revealed several critical vulnerabilities:
+This engagement commenced with initial access via valid credentials for the user `j.fleischman`, provided in a compromised state. Subsequent enumeration and exploitation revealed vulnerabilities:
 
 ## Successful Attacks / Compromise
 - **CVE-2025-24071**: Vulnerability in Simple DNS Plus allowing NTLMv2 hash extraction.
-- **Shadow Credentials Misuse**: Exploitation of GenericWrite permissions to escalate privileges.
+- **Shadow Credentials Misuse**: Exploiting GenericWrite permissions to escalate privileges, pivot to another account with remote management rights, and successfully log in remotely.
 
 
 
@@ -39,7 +39,7 @@ Next enumrate SMB share
 `smbmap -H 10.129.165.40 -u "j.fleischman -p J0elTHEM4n1990!"`
  <img src="images/smbmap.png" class="report-images" alt="SMBMAP">
 
-Form this we wee have read and write to IT share so lets see connect to that share and see if there is anything in it.
+from this we see the user as read and write to IT share so lets connect to that share and see if there are any files on the SMB.
 
 `smbclient //10.129.165.40/IT -U "j.fleischman"`
 
@@ -86,7 +86,7 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
 ![BloodHound Scan](images/Bloodhound.png)
 
 
-12. If examine WINRM_SVC in BloddHound, it is member of remote services add can remote login. If we try to use EVil-winrm for user p.agila or J.FLEISCHMAN will see users dint have permisison. 
+12. If you examine WINRM_SVC in BloodHound, it is member of remote services add can remote login. If we try to use evil-winrm for user p.agila or J.FLEISCHMAN will see users don't have permisison. 
 
 Observations form BloodHound
 
@@ -112,7 +112,7 @@ Implications: User can indirectly modify service accounts. Compromising this use
 
 ### Request Kerberos TGT for Service Account
 
-If your local time does not match the Domain Controller (DC), you may encounter errors. Synchronize time first:
+If your local time does not match the Domain Controller (DC), you may encounter AN ERROR([-] Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)). Synchronize time first:
 
 `sudo rdate -n <TARGET_IP>`
 
