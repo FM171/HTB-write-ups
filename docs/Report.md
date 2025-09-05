@@ -10,7 +10,6 @@ This engagement commenced with initial access via valid credentials for the user
 - **Shadow Credentials Misuse**: Exploitation of GenericWrite permissions to escalate privileges.
 
 
-> By chaining these vulnerabilities, full domain compromise was achieved, demonstrating the importance of robust credential management and configuration in Active Directory environments.
 
 ## Other Findings / Unsuccessful Attacks
 - Listing domain users via `rpcclient enumdomusers`, revealing accounts like `Administrator`, `Guest`, `krbtgt`, service accounts (`ca_svc`, `ldap_svc`, `winrm_svc`), and user accounts (`j.coffey`, `p.agila`).  
