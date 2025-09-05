@@ -30,18 +30,29 @@ Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
 - WinRM service available
 
 
-```
-smbmap -H 10.129.186.239 -u j.fleischman -p J0elTHEM4n1990!
 
+`smbmap -H 10.129.186.239 -u "j.fleischman -p J0elTHEM4n1990!"`
 
  <img src="images/smbmap.png" class="report-images" alt="SMBMAP">
 
-smbclient //10.129.186.239/IT -U 'j.fleischman'
 
-mget *
-```
 
-On SMB, we see that we have write permission for the IT share, and we find a PDF with vulnerabilities.
+
+`smbclient //10.129.186.239/IT -U "j.fleischman"`
+
+
+smb: \> ls
+  .                                   D        0  Fri Sep  5 20:08:31 2025
+  ..                                  D        0  Fri Sep  5 20:08:31 2025
+  Everything-1.4.1.1026.x64           D        0  Fri Apr 18 16:08:44 2025
+  Everything-1.4.1.1026.x64.zip       A  1827464  Fri Apr 18 16:04:05 2025
+  KeePass-2.58                        D        0  Fri Apr 18 16:08:38 2025
+  KeePass-2.58.zip                    A  3225346  Fri Apr 18 16:03:17 2025
+  Upgrade_Notice.pdf                  A   169963  Sat May 17 15:31:07 2025
+
+
+
+Download the files and you find the below:
 
 
 ![!PDF on the SMB](images/notice.png)
@@ -71,15 +82,14 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
 BloodHound is AD anlsyis tool that helps enuerate objects/principles. 
 
 Create a BloodHound file and upload to bloodhound review.
-      `sudo nxc ldap dc01.fluffy.htb -u '<USERNAME>' -p '<PASSWORD>' \
-      --bloodhound --collection All --dns-tcp --dns-server <TARGET_IP>`
+      ```sudo nxc ldap dc01.fluffy.htb -u "<USERNAME>" -p "<PASSWORD>" \ --bloodhound --collection All --dns-tcp --dns-server <TARGET_IP>```
        `BloodHound`
        Should see BloodHound open in new tab in firefox
        Upload the ladp file we created
        Search for User we enumerated
        Examine relationships and you will see this 
 
-       ![BloodHound Scan](images/Bloodhound.png)
+![BloodHound Scan](images/Bloodhound.png)       
 
 
 Observations
