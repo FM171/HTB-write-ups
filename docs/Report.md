@@ -34,7 +34,7 @@ NMAP is tool ised for port scanning, service dction and network disocver. -sC ru
 
 Next enumrate SMB share
 `smbmap -H 10.129.165.40 -u "j.fleischman -p J0elTHEM4n1990!"`
-![Alt Text]https://fm171.github.io/HTB-FLUFFY/images/smbmap.png)
+ <img src="images/smbmap.png" class="report-images" alt="SMBMAP">
 
 Form this we wee have read and write to IT share so lets see connect to that share and see if there is anything in it. 
 ```smbclient //10.129.165.40/IT -U "j.fleischman"`
