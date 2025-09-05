@@ -50,8 +50,7 @@ smb: \> ls
   Upgrade_Notice.pdf                  A   169963  Sat May 17 15:31:07 2025
 
 Download UPgrade_Notice.pdf and you will see a list of vulnerbites that need patching. 
-![Alt Text]https://fm171.github.io/HTB-FLUFFY/images/notice.png)
-
+![!PDF on the SMB](images/notice.png)
 
 To find a good example of how to run a exploit CVE- Title -github poc in google. 
 You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
@@ -78,7 +77,7 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
 9. Upload the ladp file we created to upload 
 10. Search for User we enumerated
 11. Examine relationships and you will see this 
-![Alt Text]https://fm171.github.io/HTB-FLUFFY/images/bloodhound.png)
+![Nmap Scan](images/bloodhound.png)
 12. If examine WINRM_SVC in BloddHound, it is member of remote services add can remote login. If we try to use EVil-winrm for user p.agila or J.FLEISCHMAN will see users dint have permisison. 
 
 Observations form BloodHound
@@ -116,15 +115,15 @@ If your local time does not match the Domain Controller (DC), you may encounter 
 
 ### Set the Kerberos ticket environment variable:
 
-Why we do this: 
+> Why we do this: 
 
-When you log in with kinit user@REALM, and have a valid ticket, it gets stored in /tmp/krb5cc_<UID>.
+ > When you log in with a valid ticket, it gets stored in /tmp/krb5cc_<UID>.
 
-All Kerberos-enabled tools (smbclient, psexec.py, ldapsearch, etc.) will look in that default location to authenticate.
+> All Kerberos-enabled tools (smbclient, psexec.py, ldapsearch, etc.) will look in that default location to authenticate.
 
-But in a pentest, you often manually extract or forge tickets (e.g., with impacket, Mimikatz, or AD CS attacks). Those tickets don’t automatically go to /tmp/krb5cc_<UID>. They’re saved in a .ccache file.
+> But in a pentest, you often manually extract or forge tickets (e.g., with impacket, Mimikatz, or AD CS attacks). Those tickets don’t automatically go to /tmp/krb5cc_<UID>. They’re saved in a .ccache file.
 
-So, to make Kerberos-aware tools use your forged/extracted ticket, you tell them where it is:
+> So, to make Kerberos-aware tools use your forged/extracted ticket, you tell them where it is:
 
 `export KRB5CCNAME=<SERVICE_ACCOUNT>.ccache`
 
