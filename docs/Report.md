@@ -8,7 +8,7 @@ This engagement commenced with initial access via valid credentials for the user
 ## Successful Attacks / Compromise
 - **CVE-2025-24071**: Vulnerability in Simple DNS Plus allowing NTLMv2 hash extraction.
 - **Shadow Credentials Misuse**: Exploitation of GenericWrite permissions to escalate privileges.
-- **ESC16 (UPN Spoofing)**: Abuse of Active Directory Certificate Services to forge certificates for administrative access.
+
 
 > By chaining these vulnerabilities, full domain compromise was achieved, demonstrating the importance of robust credential management and configuration in Active Directory environments.
 
