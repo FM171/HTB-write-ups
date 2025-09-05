@@ -29,7 +29,7 @@ This engagement commenced with initial access via valid credentials for the user
 
 `sudo nmap -sC -sV 10.129.165.40`
 NMAP is tool ised for port scanning, service dction and network disocver. 
-- `-sC` runs nmap defaul scripts
+- `-sC` runs nmap default scripts
 - `sV` tries to identify the exact software running. 
 
 
