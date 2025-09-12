@@ -23,8 +23,7 @@ Because input is not type-checked or sanitized, an attacker can inject MongoDB o
 Authentication bypass: Attackers can log in without valid credentials.
 
 ## Likelihood:
-Low likelood but high impact, this vulnerability need access to files to discover but is simple to execute. 
-
+Low probability, high severity — requires file access to identify, but easily exploitable once discovered.
 
 ## Evidence 
 
