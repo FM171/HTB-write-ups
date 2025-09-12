@@ -63,7 +63,7 @@ Replication steps
 
 2. On post payload change Content-Type to application/json.
 
-> We know from files the website uses MongoDB so simple google and find statement that search for email and password that is not null 
+> We know from files the website uses MongoDB so simple research and find statement that search for email and password that is not null 
 
 
 4. Replace the body with payload:
