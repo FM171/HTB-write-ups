@@ -60,14 +60,14 @@ As we can see from the above the ```user = users_collection.find_one({"email": e
 
 Replication steps 
 
-Intercept the /login POST request using Burp suite 
+1. Intercept the /login POST request using Burp suite 
 
-Change Content-Type to application/json.
+2. On post payload change Content-Type to application/json.
 
 > We know from files the website uses MongoDB so simple google and find statement that search for email and password that is not null 
 
 
-Replace the body with payload:
+4. Replace the body with payload:
 
 {
   "email": {"$ne": null},
@@ -75,7 +75,9 @@ Replace the body with payload:
 }
 
 
-Forward the request.
+5. Forward the request
+
+6. Successful login 
 
 
 
