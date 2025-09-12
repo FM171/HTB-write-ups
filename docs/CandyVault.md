@@ -4,6 +4,31 @@
 
 Our testing indicates that the overall security of CandyVault.com requires significant improvement. We identified a critical NoSQL Injection vulnerability in the login functionality, which allowed us to bypass authentication. The main attack vector utilized a NoSQL Injection payload sent via a proxy tool (Burp Suite). This vulnerability exists because the login logic does not properly validate user input, allowing queries to match any document where the email and password fields are not null rather than being valid. 
 
+
+##  MongoDB Injection authenticaion bypass 
+
+
+# Description
+
+The login functionality of CandyVault.com is vulnerable to NoSQL Injection due to improper handling of user-supplied input. The application directly incorporates unvalidated email and password values from client requests into MongoDB queries:
+
+```user = users_collection.find_one({"email": email, "password": password})```
+
+
+Because input is not type-checked or sanitized, an attacker can inject MongoDB operators (e.g., $ne) instead of scalar string values. This allows bypassing of authentication checks by submitting a crafted JSON payload.
+
+
+# Impact 
+
+Authentication bypass: Attackers can log in without valid credentials.
+
+# Likelihood:
+Low likelood but high impact, this vulnerability need access to files to discover but is simple to execute. 
+
+
+# Evidence 
+
+Snippet from routes.py
 ```
 @app.route("/login", methods=["POST"])
 def login():
