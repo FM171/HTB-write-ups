@@ -69,10 +69,7 @@ Replication steps
 
 4. Replace the body with payload:
 
-{
-  "email": {"$ne": null},
-  "password": {"$ne": null}
-}
+    ``` {"email": {"$ne": null}, "password": {"$ne": null}  } ```
 
 
 5. Forward the request
