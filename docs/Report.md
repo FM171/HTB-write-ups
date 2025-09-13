@@ -1,9 +1,15 @@
 
 # Executive Summary – HTB Fluffy
 
-The HTB Fluffy machine is an "Easy" rated Windows Active Directory environment designed to simulate a real-world enterprise network. 
+The testing indicates that the Active Directory environment contains multiple vulnerabilities, some of which could allow a malicious actor to compromise user accounts and access sensitive network resources.
+During the engagement, we were able to compromise a domain user account and access network shares, demonstrating how misconfigured permissions and exposed service accounts can be leveraged for privilege escalation. The attack chain involved exploiting CVE-2025-24071 and Shadow Credentials misconfigurations, highlighting weaknesses in service account management and credential handling.
+Enumeration of users, groups, and privileges using tools such as rpcclient and BloodHound revealed potential high-value targets, and simulated exploitation showed that credential capture and hash extraction could provide further access across the network. While password policies and strong account configurations mitigated some risks, the findings illustrate that even a single vulnerable account can provide a foothold into the domain.
+These results emphasize the importance of:
+•	Strict service account management and privilege control
+•	Regular patching of known vulnerabilities
+•	Continuous monitoring of credential usage and network authentication flows
+If unaddressed in a real environment, similar vulnerabilities could result in unauthorized access to critical systems and sensitive data, potentially constituting a reportable data breach under regulations such as GDPR.
 
-This engagement commenced with initial access via valid credentials for the user `j.fleischman`, provided in a compromised state. Subsequent enumeration and exploitation revealed vulnerabilities:
 
 ## Successful Attacks / Compromise
 - **CVE-2025-24071**: Vulnerability in Simple DNS Plus allowing NTLMv2 hash extraction.
