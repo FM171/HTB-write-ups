@@ -20,7 +20,7 @@ Because input is not type-checked or sanitized, an attacker can inject MongoDB o
 
 ## Impact 
 
-Authentication bypass: Attackers can log in without valid credentials.
+An authentication bypass allows attackers to log in without valid credentials. This directly violates the security principle of confidentiality, as unauthorized users can view sensitive or confidential information. This makes it a high-severity security issue requiring immediate remediation.
 
 ## Likelihood:
 Low probability, high severity — requires file access to identify, but easily exploitable once discovered.
