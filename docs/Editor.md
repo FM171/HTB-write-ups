@@ -29,8 +29,7 @@ High: this vulnerablity does not require authentication to exploit.
  4. nc terminal will start rce 
  5. spawn shell - `python3 -c 'import pty; pty.spawn("/bin/bash")'`
  6. enumerate files on webserver will discover user oliver 
- <img src="images/oliver found.png" class="editors" alt="user found">
-
+ <img src="images/oliver_found.png" class="editors" alt="user found">
 
 
 
