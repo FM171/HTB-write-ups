@@ -52,7 +52,7 @@ High: this vulnerablity does not require authentication to exploit.
 
 
 ## Replication steps 
-1. ` ls -l /usr/bin/pkexec /bin/pkexec 2>/dev/null || true`
+1. Identify files that execute with elevated privileges. `find / -type f -perm -4000 -user root 2>/dev/null`
 2. google /opt/netdata/usr/libexec/netdata/plugins.d/ndsudo vulnerablity 
 3. Open https://github.com/T1erno/CVE-2024-32019-Netdata-ndsudo-Privilege-Escalation-PoC
 4. Copy payload.c and CVE-2024-32019.sh
