@@ -1,20 +1,22 @@
 
 
-# CVE-2025-24893 — Remote Code Execution
+Remediation— Remote Code Execution
 
 ## Description
 
-Editor.htb is vulnerable to unauthenticated remote code execution (RCE).
+A vulnerability in Editor.htb allows unauthenticated remote code execution (RCE). An unauthenticated attacker can execute code on the server remotely, potentially gaining control of the affected application host.
 
 ## Impact
 
-Medium impact: allows access to sensitive information on the server which breaches CIA prinicples of confientiality. Ask mentor if can delete files?
+High — Successful exploitation can lead to full compromise of the application and access to sensitive data on the host. This violates the confidentiality, integrity, and availability (CIA) of affected systems and may allow attacker persistence, data exfiltration, or further lateral movement.
 
 ## Likelihood
 
-High: this vulnerablity does not require authentication to exploit.
+High — Exploitation requires no authentication and can be performed remotely, increasing the probability of active exploitation.
 
 
+## Remediation 
+Upgrade XWiki to 15.10.11, 16.4.1, or any later release from the vendor. This is the official fix for CVE-2025-24893.
 
 ## Evidence 
 ### Replication steps 
@@ -42,7 +44,7 @@ High: this vulnerablity does not require authentication to exploit.
  7. Google files on server and find hibernate.cfg.xml which stores XWiki data 
  8. find and open hibernate.cfg.xml
  9. Will see passwords used to login
-10. ssh as oliver with password and one will be successful  
+10. ssh as oliver with password and one will be successful  `ssh oliver@IP
 
 
 
@@ -51,16 +53,6 @@ High: this vulnerablity does not require authentication to exploit.
 
 
 
-## Replication steps 
-1. Identify files that execute with elevated privileges. `find / -type f -perm -4000 -user root 2>/dev/null`
-2. google /opt/netdata/usr/libexec/netdata/plugins.d/ndsudo vulnerablity 
-3. Open https://github.com/T1erno/CVE-2024-32019-Netdata-ndsudo-Privilege-Escalation-PoC
-4. Copy payload.c and CVE-2024-32019.sh
-5. Create nvme file `gcc -static payload.c -o nvme -Wall -Werror -Wpedantic to create` 
-6. transfer to ssh shell
-7. run sh CVE-2024-32019.sh to get root shell 
-
- <img src="images/editor_priv_esc.png" class="editors" alt="editor priv esc">
 
 
 
