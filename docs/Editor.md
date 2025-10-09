@@ -1,6 +1,6 @@
 
 
-Remediation— Remote Code Execution
+CVE-2025-24893 - Remote Code Execution
 
 ## Description
 
