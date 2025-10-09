@@ -44,7 +44,7 @@ Upgrade XWiki to 15.10.11, 16.4.1, or any later release from the vendor. This is
  7. Google files on server and find hibernate.cfg.xml which stores XWiki data 
  8. find and open hibernate.cfg.xml
  9. Will see passwords used to login
-10. ssh as oliver with password and one will be successful  `ssh oliver@IP
+10. ssh as oliver with password and one will be successful  `ssh oliver@IP`
 
 
 
