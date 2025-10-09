@@ -23,7 +23,7 @@ Upgrade XWiki to 15.10.11, 16.4.1, or any later release from the vendor. This is
 
  <img src="images/editor_version.png" class="editors" alt="editor">
 
- From the login page a version is clearly displayed. Research shows vulnerablity for that version https://nvd.nist.gov/vuln/detail/CVE-2025-24893. Google CVE-2025-24893 pOc and github is found. 
+ From the login page a version is clearly displayed. Research shows vulnerablity for that version https://nvd.nist.gov/vuln/detail/CVE-2025-24893. Google CVE-2025-24893 PoC and github is found. 
 
  1. Download CVE-2025-24893.py
  2. start listening nc -lvnp port
