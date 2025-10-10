@@ -5,4 +5,4 @@
 
 [Fluffy: Easy windows machine](Report.md)
 
-[Editor: Easy linux machine](Editor.md)
+
