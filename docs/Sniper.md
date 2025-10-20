@@ -25,7 +25,7 @@ The filename-construction pattern (user_input + extensions → blog-es.php) is a
 3. Create reverse shell and upload file to smb folder
 4. Start Netcat `nc -lvnp 1234`
 5. Upload file to server 
-    <img src="images/smb-uploadt.png" alt="smb upload">
+    <img src="images/smb-upload.png" alt="smb upload">
 6. Look for files on server and will find a password 
 <img src="images/password.png" alt="password found">
 7. Change dirctory to C:\Users to find other user Chris 
