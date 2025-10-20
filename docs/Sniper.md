@@ -1,18 +1,18 @@
 
 # Executive Summary – Sniper 
+A vulnerability was discovered in the web application that allows the server to reveal and access files it should keep private. During testing, this weakness allowed the application to retrieve files from external sources, which in turn exposed sensitive information such as user credentials. These credentials were then used to access a local account on the server. Because the exposed credentials could potentially be reused across other systems, this creates a credible risk for an attacker to move laterally within the network and gain access to additional systems or sensitive data.
 
 # Remote File Inclusision 
 
 ## Description
-A vulnerability was discovered in the web application that allows an attacker to cause the server to reveal files it should keep private and downloadfiles it should not . During testing, the server was able to execute command to downlaod a remote file which lead to attacker accessing web server terminal. THis then lead to exposure oe server informaion such as user credentials — which were then successfully used to access a local account. Because exposed credentials can be reused across systems, this creates a credible path for an attacker to move laterally inside the network and access additional systems or data. 
-
+To do 
 
 
 ## Impact 
 High. The vulnerability allowed disclosure of confidential information (including cleartext credentials and user identifiers) via file inclusion. Those credentials were validated against a host account, enabling account takeover of a local user. With valid credentials and file‑disclosure capability, an attacker could perform lateral movement, access sensitive data, and — in worst‑case scenarios — achieve remote command execution on other systems. This has direct consequences for confidentiality, integrity, and availability of the affected environment.
 
 ## Likelihood:
-The filename-construction pattern (user_input + suffix → blog-es.php) is a well-known indicator that testers and attackers will probe for Local File Inclusion (LFI). Because the application builds filenames from user-controlled input, the probability that an attacker can manipulate this to read arbitrary local files is high unless the input is strictly validated or mapped to a whitelist.
+The filename-construction pattern (user_input + extensions → blog-es.php) is a well-known indicator that testers and attackers will probe for Local File Inclusion (LFI). Because the application builds filenames from user-controlled input, the probability that an attacker can manipulate this to read arbitrary local files is high unless the input is strictly validated or mapped to a whitelist.
 
 
 ## Evidence:
