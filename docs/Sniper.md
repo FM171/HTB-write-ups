@@ -5,7 +5,7 @@ A vulnerability was discovered in the web application that allows the server to 
 # Remote File Inclusision 
 
 ## Description
-To do 
+A File Inclusion (FI) vulnerability occurs when an application builds a file path from user-supplied input and then reads or executes that file on the server. If the application does not properly validate or restrict the user-supplied value, an attacker can cause the application to return or execute files that should remain private.
 
 
 ## Impact 
