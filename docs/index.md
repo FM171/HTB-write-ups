@@ -5,4 +5,6 @@
 
 [Fluffy: Easy windows machine](Report.md)
 
+[Sniper: medium windows machine](Sniper.md)
+
 
