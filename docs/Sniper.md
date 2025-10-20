@@ -47,7 +47,7 @@ Note: If have issues use Test-Path to see if issue with acessing SMB
 
 Have access to the user Chris terminal  
 
-<img src="images/Chris connection.png" alt="chris">
+<img src="images/chris-connection.png" alt="chris">
 
 
 
