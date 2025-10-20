@@ -35,7 +35,8 @@ The filename-construction pattern (user_input + extensions → blog-es.php) is a
 
 `$pass = ConvertTo-SecureString "36mEAhz/B8xQ~2VM" -AsPlainText -Force`
 
-`$cred = New-Object  System.Management.Automation.PSCredential("SNIPER\\Chris", $pass) `
+`$cred = New-Object  System.Management.Automation.PSCredential("SNIPER\\Chris", $pass)`
+
 Check to see if it was successful 
 ` Invoke-Command -ComputerName SNIPER -Credential $cred -ScriptBlock {whoami} `
 
@@ -49,7 +50,7 @@ Note: If have issues use Test-Path to see if issue with acessing SMB
 
 Have access to the user Chris terminal  
 
-<img src="images/chris-connection.png" alt="chris">
+<img src="images/chris.png" alt="chris">
 
 
 
