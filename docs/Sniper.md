@@ -1,6 +1,6 @@
 
 # Executive Summary – Sniper 
-A vulnerability was discovered in the web application that allows the server to reveal and access files it should keep private. During testing, this weakness allowed the application to retrieve files from external sources, which in turn exposed sensitive information such as user credentials. These credentials were then used to access a local account on the server. Because the exposed credentials could potentially be reused across other systems, this creates a credible risk for an attacker to move laterally within the network and gain access to additional systems or sensitive data.
+A vulnerability was discovered in the web application that allows the server to reveal and access files it should keep private. During testing, this weakness allowed the application to retrieve files from web server, which in turn lead to server downloading file that enabled tester to gain access to sever. This then exposed sensitive information such as user credentials. These credentials were then used to access a local account on the server. Because the exposed credentials could potentially be reused across other systems, this creates a credible risk for an attacker to move laterally within the network and gain access to additional systems or sensitive data.
 
 # Remote File Inclusision 
 
