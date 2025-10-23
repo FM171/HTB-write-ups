@@ -3,11 +3,10 @@
 
 A vulnerability and misconfigurations in the Active Directory environment allowed the tester to compromise a user account and access internal network resources. The tester exploited exposed service account credentials and weak permission settings to capture authentication material and escalate privileges. That access enabled the tester to read network shares and access sensitive information — including account credentials — which were then used to authenticate to a local server account. Because those credentials could be reused elsewhere, this created a credible risk that an attacker could move laterally across the domain to access additional systems and sensitive data.
 
-These results emphasize the importance of:
-•	Strict service account management and privilege control
-•	Regular patching of known vulnerabilities
-•	Continuous monitoring of credential usage and network authentication flows
-If unaddressed in a real environment, similar vulnerabilities could result in unauthorized access to critical systems and sensitive data, potentially constituting a reportable data breach under regulations such as GDPR.
+These results emphasize the importance of,
+- Strict service account management and privilege control
+- Regular patching of known vulnerabilities
+- Continuous monitoring of credential usage and network authentication flows
 
 
 ## Successful Attacks / Compromise
