@@ -2,7 +2,7 @@
 
 ## Executive Summary 
 
-Our testing indicates that the overall security of CandyVault.com requires significant improvement. We identified a critical NoSQL Injection vulnerability in the login functionality, which allowed us to bypass authentication. The main attack vector utilized a NoSQL Injection payload sent via a proxy tool (Burp Suite). This vulnerability exists because the login logic does not properly validate user input, allowing queries to match any document where the email and password fields are not null rather than being valid. 
+Our testing indicates that the overall security of CandyVault.com requires significant improvement. We identified a critical NoSQL Injection vulnerability in the login functionality, which allowed us to bypass authentication. The main attack vector utilized a Injection payload sent via a proxy tool (Burp Suite). This vulnerability exists because the login logic does not properly validate user input, allowing queries to match any document where the email and password fields are not null rather than being valid. 
 
 
 #  MongoDB Injection authenticaion bypass 
