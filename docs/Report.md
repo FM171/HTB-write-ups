@@ -1,9 +1,8 @@
 
 # Executive Summary – HTB Fluffy
 
-The testing indicates that the Active Directory environment contains multiple vulnerabilities, some of which could allow a malicious actor to compromise user accounts and access sensitive network resources.
-During the engagement, we were able to compromise a domain user account and access network shares, demonstrating how misconfigured permissions and exposed service accounts can be leveraged for privilege escalation. The attack chain involved exploiting CVE-2025-24071 and Shadow Credentials misconfigurations, highlighting weaknesses in service account management and credential handling.
-Enumeration of users, groups, and privileges using tools such as rpcclient and BloodHound revealed potential high-value targets, and simulated exploitation showed that credential capture and hash extraction could provide further access across the network. While password policies and strong account configurations mitigated some risks, the findings illustrate that even a single vulnerable account can provide a foothold into the domain.
+A vulnerability and misconfigurations in the Active Directory environment allowed the tester to compromise a user account and access internal network resources. The tester exploited exposed service account credentials and weak permission settings to capture authentication material and escalate privileges. That access enabled the tester to read network shares and access sensitive information — including account credentials — which were then used to authenticate to a local server account. Because those credentials could be reused elsewhere, this created a credible risk that an attacker could move laterally across the domain to access additional systems and sensitive data.
+
 These results emphasize the importance of:
 •	Strict service account management and privilege control
 •	Regular patching of known vulnerabilities
